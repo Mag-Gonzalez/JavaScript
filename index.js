@@ -11,6 +11,8 @@ const servicioController = require("./controllers/servicio.controller");
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}))
+
 app.set('view engine', 'ejs');
 
 conexion
@@ -20,6 +22,9 @@ conexion
 app.get('/', (req, res) => {
   res.render('pages/index.ejs');
 });
+
+app.get('/', clienteController.home);
+//app.get('/Listar',clienteController.Listar)
 app.get('/clientes', clienteController.consultar);
 app.get('/clientes/:id', clienteController.obtenerPorId);
 app.post('/clientes', clienteController.crear);
@@ -37,6 +42,8 @@ app.get('/servicios/:id', servicioController.obtenerPorId);
 app.post('/servicios', servicioController.crear);
 app.put('/servicios/:id', servicioController.actualizar);
 app.delete('/servicios/:id', servicioController.eliminar);
+
+app.get('/formulario', clienteController.formulario);
 
 app.listen(8090, () => {
   console.log("Servidor corriendo en puerto 8000");
