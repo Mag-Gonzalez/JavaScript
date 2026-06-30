@@ -11,9 +11,9 @@ exports.obtenerPorId = async (req, res) => {
 };
 
 exports.crear = async (req, res) => {
-  const data = new Producto(req.body);
-  await data.save();
-  res.json(data);
+  console.log(req.body)
+    let resultado= await Producto.insertOne(req.body);
+  res.json(resultado);
 };
 
 exports.actualizar = async (req, res) => {
@@ -29,3 +29,7 @@ exports.eliminar = async (req, res) => {
   await Producto.findByIdAndDelete(req.params.id);
   res.json({ mensaje: "Producto eliminado" });
 };
+
+exports.formulario = async(req,res) => {
+  res.render('pages/registrarproducto')
+}

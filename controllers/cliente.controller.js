@@ -1,8 +1,9 @@
 const Cliente = require('../models/cliente.model');
 
 exports.consultar = async (req, res) => {
+  console.log('consulta ')
   const data = await Cliente.find();
-  res.render('pages/clientes.ejs', { clientes: data });
+  res.render('pages/clientes', { clientes: data });
 
 };
 
@@ -13,6 +14,9 @@ exports.obtenerPorId = async (req, res) => {
 
 exports.crear = async (req, res) => {
   try {
+    if (!nombre || !nombre.trim() || !email || !email.trim() || !telefono || !telefono.trim()) {
+      return res.render('formulario', { mensaje: "Todos los campos son obligatorios." });
+    }
     let cliente_nuevo = {
       nombre : req.body.nombre,
       email :req.body.email,
@@ -31,7 +35,6 @@ exports.crear = async (req, res) => {
     res.status(500).json({error: error.mensaje})
   }
 };
-  
 
 exports.actualizar = async (req, res) => {
   const data = await Cliente.findByIdAndUpdate(
@@ -47,10 +50,10 @@ exports.eliminar = async (req, res) => {
   res.json({ mensaje: "Cliente eliminado" });
 };
 
-exports.home = async (req,res) => {
-  res.render("/pages/index")
+exports.home = async(req,res) =>{
+  res.render("pages/index")
 }
 
-exports.formulario = async (req,res) => {
-  res.render("pages/registrarcliente")
+exports.formulario = async(req,res) => {
+  res.render('pages/registrarcliente')
 }

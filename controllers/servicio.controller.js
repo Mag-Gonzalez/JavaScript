@@ -1,5 +1,5 @@
 const Servicio = require('../models/servicio.model');
-
+// Estas ya son las funciones que mas adelante utilizaremos como ENDPOINTS
 exports.consultar = async (req, res) => {
   const data = await Servicio.find();
   res.render('pages/services.ejs', { servicios: data });
@@ -11,9 +11,9 @@ exports.obtenerPorId = async (req, res) => {
 };
 
 exports.crear = async (req, res) => {
-  const data = new Servicio(req.body);
-  await data.save();
-  res.json(data);
+  console.log(req.body)
+    let resultado= await Servicio.insertOne(req.body);
+  res.json(resultado);
 };
 
 exports.actualizar = async (req, res) => {
@@ -29,3 +29,7 @@ exports.eliminar = async (req, res) => {
   await Servicio.findByIdAndDelete(req.params.id);
   res.json({ mensaje: "Servicio eliminado" });
 };
+
+exports.formulario = async(req,res) => {
+  res.render('pages/registrarservicio')
+}

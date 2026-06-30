@@ -1,20 +1,34 @@
+// este es como el URL de Django, aca pongo todas las rutas y las funciones
+
 require("dotenv").config();
 
 const express = require("express");
 
-const conexion = require("./config/connectiondb");
 
-const clienteController = require("./controllers/cliente.controller");
-const productoController = require("./controllers/producto.controller");
-const servicioController = require("./controllers/servicio.controller");
+
+const enruta = require('./router/clientes.router');
+const enruta2 = require('./router/producto.router');
+const enruta3 = require('./router/servicio.router');
+
+
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({extended:false}))
-
 app.set('view engine', 'ejs');
+app.use(express.json());
+app.use(express.urlencoded({extendend:false}))
 
+app.use('/', enruta); 
+app.use('/api/clientes', enruta);
+app.use('/api/productos', enruta2); 
+app.use('/api/servicios', enruta3);
+
+
+
+const URI = process.env.MONGOURI;
+  
+const  conexion = require('mongoose').connect(URI);
+  
 conexion
   .then(() => console.log("Conexion exitosa a MongoDB"))
   .catch(err => console.log(err));
@@ -23,29 +37,10 @@ app.get('/', (req, res) => {
   res.render('pages/index.ejs');
 });
 
-app.get('/', clienteController.home);
-//app.get('/Listar',clienteController.Listar)
-app.get('/clientes', clienteController.consultar);
-app.get('/clientes/:id', clienteController.obtenerPorId);
-app.post('/clientes', clienteController.crear);
-app.put('/clientes/:id', clienteController.actualizar);
-app.delete('/clientes/:id', clienteController.eliminar);
 
-app.get('/productos', productoController.consultar);
-app.get('/productos/:id', productoController.obtenerPorId);
-app.post('/productos', productoController.crear);
-app.put('/productos/:id', productoController.actualizar);
-app.delete('/productos/:id', productoController.eliminar);
 
-app.get('/servicios', servicioController.consultar);
-app.get('/servicios/:id', servicioController.obtenerPorId);
-app.post('/servicios', servicioController.crear);
-app.put('/servicios/:id', servicioController.actualizar);
-app.delete('/servicios/:id', servicioController.eliminar);
 
-app.get('/formulario', clienteController.formulario);
 
-app.listen(8090, () => {
+app.listen(8000, () => {
   console.log("Servidor corriendo en puerto 8000");
 });
-

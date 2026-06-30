@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <div class="container mt-3">
+  <h2>Crear Producto</h2>
+  <form action="/api/productos/productos" method="POST">
+    <div class="mb-3 mt-3">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre del Producto" name="nombre">
+    </div>
+    <div class="mb-3 mt-3">
+      <label for="email">Precio:</label>
+      <input type="number" class="form-control" id="precio" placeholder="Digite precio" name="precio">
+    </div>
+    <div class="mb-3 mt-3">
+      <label for="tel">Stock:</label>
+      <input type="number" class="form-control" id="stock" placeholder="Digite stock" name="stock">
+    </div>
+    
+    <div class="form-check mb-3">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Recordarme Siempre
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</div>
+
+    
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>
